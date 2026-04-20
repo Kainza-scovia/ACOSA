@@ -79,8 +79,8 @@ export function TeamsShowcase() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-2">ACOSA Teams</h2>
-          <p className="text-lg text-muted-foreground">Different generations, unified spirit</p>
+          <h2 className="text-4xl font-bold text-foreground mb-2">ACOSA FIRST EVENT</h2>
+          <p className="text-lg text-muted-foreground">Different Teams, unified spirit</p>
         </div>
 
         {/* Teams Grid */}
@@ -91,7 +91,7 @@ export function TeamsShowcase() {
               className="group rounded-xl overflow-hidden bg-card border border-border shadow-sm hover:shadow-lg transition-all duration-300"
             >
               {/* Team Image */}
-              <div 
+              <div
                 className="relative h-64 overflow-hidden bg-gray-200 cursor-pointer"
                 onClick={() => setSelectedImage(team.logo)}
               >
@@ -133,7 +133,7 @@ export function TeamsShowcase() {
 
         {/* Fullscreen Image Modal */}
         {selectedImage && (
-          <div 
+          <div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
@@ -151,7 +151,7 @@ export function TeamsShowcase() {
             </button>
 
             {/* Fullscreen Image */}
-            <div 
+            <div
               className="relative w-full h-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
