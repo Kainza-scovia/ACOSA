@@ -66,7 +66,7 @@ export default function Home() {
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DPM_9439.jpg-qLFKZl5AtubRDx5lRnqZQfeNdNdkry.jpeg',
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DPM_9202.jpg-SeWPyGrd5Y4ZnrSLYMPwpSkvD3834N.jpeg',
       ],
-      author: 'Mr. kamwada',
+      author: 'Mrs. kamwada',
       avatar: '/acosa-badge.jpg',
       role: 'Sports Director, ACOSA',
       likes: 0,
