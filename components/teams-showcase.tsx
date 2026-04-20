@@ -79,7 +79,7 @@ export function TeamsShowcase() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-2">ACOSA FIRST EVENT</h2>
+          <h2 className="text-4xl font-bold text-foreground mb-2">ACOSA First Edition Launch</h2>
           <p className="text-lg text-muted-foreground">Different Teams, unified spirit</p>
         </div>
 
