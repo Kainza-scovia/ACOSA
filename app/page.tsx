@@ -102,12 +102,12 @@ export default function Home() {
       images: [
         'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DPM_9487.jpg-TFLvvq6xRUg4xQ0sosJ2Q83zZkmscI.jpeg',
       ],
-      author: 'Lisa Rodriguez',
+      author: 'Lisa Acam',
       avatar: '/acosa-badge.jpg',
       role: 'Event Organizer, ACOSA',
-      likes: 512,
-      comments: 78,
-      shares: 134,
+      likes: 0,
+      comments: 0,
+      shares: 0,
       timestamp: '6 days ago',
     },
     {
@@ -374,7 +374,7 @@ export default function Home() {
                   <p className="text-muted-foreground">Relive incredible moments from past ACOSA events and celebrations</p>
                 </div>
               </div>
-              
+
               <div className="px-4 md:px-6 lg:px-8 space-y-6">
 
                 {memoryPosts.map((post) => (
