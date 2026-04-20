@@ -295,7 +295,7 @@ export default function Home() {
       company: 'Acacia Foundation.',
       logo: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=56&h=56&fit=crop',
       location: 'New York, NY',
-      salary: '$100k - $140k',
+      salary: 'Not disclosed',
       type: 'Full-time',
       description: 'Help us create beautiful and intuitive user experiences. We\'re looking for a talented designer with a strong portfolio and experience in design systems. Figma and prototyping skills a must.',
       postedBy: 'Kainza scovia',
