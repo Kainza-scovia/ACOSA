@@ -24,17 +24,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Check localStorage on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('acosa-user');
+    // Check BOTH possible keys to clear old data
+    const storedUser = localStorage.getItem('acosaUser') || localStorage.getItem('acosa-user');
+    
     if (storedUser) {
       try {
         const userData = JSON.parse(storedUser);
         setIsLoggedIn(true);
-        setUser(userData);
+        setUser({ id: userData.studentId || userData.id, name: userData.name });
       } catch (error) {
         console.error('Failed to parse stored user:', error);
+        localStorage.removeItem('acosaUser');
         localStorage.removeItem('acosa-user');
       }
     }
+    
     setIsHydrated(true);
   }, []);
 
@@ -42,13 +46,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const userData: User = { id: userId, name: userName };
     setIsLoggedIn(true);
     setUser(userData);
-    localStorage.setItem('acosa-user', JSON.stringify(userData));
+    localStorage.setItem('acosaUser', JSON.stringify({ studentId: userId, name: userName }));
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
+    localStorage.removeItem('acosaUser');
     localStorage.removeItem('acosa-user');
+    sessionStorage.removeItem('acosaUser');
   };
 
   return (
