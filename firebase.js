@@ -1,4 +1,4 @@
-// firebase.js - Put this in your main project folder (acosa1)
+// firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
@@ -17,7 +17,8 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 export async function loginWithStudentId(studentId, password) {
-  const email = studentId.replace(/\|/g, '_').toLowerCase() + '@example.com';
+  // Convert ACOSA/2015/0001 -> acosa_2015_0001@example.com
+  const email = studentId.replace(/\//g, '_').toLowerCase() + '@example.com';
   
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);

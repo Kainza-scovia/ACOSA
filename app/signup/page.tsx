@@ -65,9 +65,9 @@ export default function SignupPage() {
       return;
     }
 
-    // Generate Student ID
+    // Generate Student ID with slashes (easier for users to type)
     const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-    const studentId = `ACOSA|${classYear}|${randomNum}`;
+    const studentId = `ACOSA/${classYear}/${randomNum}`;
     
     // Store user data temporarily before payment
     const tempUserData = {
