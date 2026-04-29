@@ -4,15 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/app/auth-context';
 
-const MEMBERSHIP_FEE = 30000; // UGX. membership fee
+const MEMBERSHIP_FEE = 30000; // UGX
 
 export default function SignupPage() {
   const router = useRouter();
-  const { login } = useAuth();
   const [fullName, setFullName] = useState('');
   const [classYear, setClassYear] = useState('');
   const [email, setEmail] = useState('');
@@ -67,31 +65,37 @@ export default function SignupPage() {
       return;
     }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Create account and login
-    const studentId = `ACOSA|${classYear}|${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-    login(studentId, fullName);
+    // Generate Student ID
+    const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const studentId = `ACOSA|${classYear}|${randomNum}`;
+    
+    // Store user data temporarily before payment
+    const tempUserData = {
+      fullName,
+      classYear,
+      email,
+      password,
+      studentId,
+    };
+    
+    sessionStorage.setItem('tempUser', JSON.stringify(tempUserData));
     
     setIsLoading(false);
-    router.push('/');
+    
+    // Redirect to payment page
+    router.push('/payment');
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
-          {/* Header */}
           <div className="bg-gradient-to-r from-primary to-primary/80 p-8 text-center">
             <h1 className="text-3xl font-bold text-primary-foreground mb-2">Join ACOSA</h1>
             <p className="text-primary-foreground/80 text-sm">Become part of our alumni network</p>
           </div>
 
-          {/* Content */}
           <div className="p-8">
-            {/* Error Message */}
             {error && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
                 <p className="text-red-600 text-sm">{error}</p>
@@ -99,14 +103,13 @@ export default function SignupPage() {
             )}
 
             <form onSubmit={handleSignup} className="space-y-4">
-              {/* Full Name */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Full Name
                 </label>
                 <Input
                   type="text"
-                  placeholder=" "
+                  placeholder="Enter your full name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   disabled={isLoading}
@@ -114,7 +117,6 @@ export default function SignupPage() {
                 />
               </div>
 
-              {/* Class Year */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   ACOSA Class Year
@@ -134,14 +136,13 @@ export default function SignupPage() {
                 </select>
               </div>
 
-              {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Email Address
                 </label>
                 <Input
                   type="email"
-                  placeholder=" "
+                  placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
@@ -149,7 +150,6 @@ export default function SignupPage() {
                 />
               </div>
 
-              {/* Password */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Password
@@ -164,7 +164,6 @@ export default function SignupPage() {
                 />
               </div>
 
-              {/* Confirm Password */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Confirm Password
@@ -179,16 +178,14 @@ export default function SignupPage() {
                 />
               </div>
 
-              {/* Membership Fee Info */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <p className="text-sm text-foreground mb-2 font-semibold">Membership Fee</p>
-                <p className="text-2xl font-bold text-primary mb-2"> {MEMBERSHIP_FEE.toLocaleString()} UGX</p>
+                <p className="text-2xl font-bold text-primary mb-2">{MEMBERSHIP_FEE.toLocaleString()} UGX</p>
                 <p className="text-xs text-muted-foreground">
                   Annual membership fee to join the ACOSA network
                 </p>
               </div>
 
-              {/* Terms and Conditions */}
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
@@ -199,11 +196,10 @@ export default function SignupPage() {
                   className="w-4 h-4 rounded border-border mt-1"
                 />
                 <label htmlFor="terms" className="text-sm text-muted-foreground cursor-pointer">
-                  I agree to the ACOSA terms and conditions and understand the {MEMBERSHIP_FEE.toLocaleString()} Ugx annual membership fee
+                  I agree to the ACOSA terms and conditions and understand the {MEMBERSHIP_FEE.toLocaleString()} UGX annual membership fee
                 </label>
               </div>
 
-              {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isLoading}
@@ -211,19 +207,18 @@ export default function SignupPage() {
               >
                 {isLoading ? (
                   <>
-                    <span className="animate-spin">⌛</span>
+                    <span className="animate-spin">⏳</span>
                     Creating Account...
                   </>
                 ) : (
                   <>
-                    Create Account
+                    Continue to Payment
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </Button>
             </form>
 
-            {/* Footer Links */}
             <div className="mt-8 pt-8 border-t border-border">
               <div className="text-center">
                 <p className="text-muted-foreground text-sm">
@@ -233,14 +228,6 @@ export default function SignupPage() {
                   </Link>
                 </p>
               </div>
-
-              {/*<Link
-                href="/login"
-                className="mt-6 flex items-center justify-center gap-2 text-primary hover:text-primary/80 text-sm font-medium"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back to Sign In
-              </Link>*/}
             </div>
           </div>
         </div>
