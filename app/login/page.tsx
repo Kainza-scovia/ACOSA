@@ -75,7 +75,7 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold mb-4 leading-tight">Welcome Back to ACOSA</h2>
+          <h2 className="text-3xl font-bold mb-4 leading-tight">Welcome to ACOSA</h2>
           <p className="text-lg text-primary-foreground/80 mb-6">
             Connect with fellow alumni, explore opportunities, and stay engaged with our vibrant community.
           </p>
@@ -134,9 +134,9 @@ export default function LoginPage() {
           {/* Form Header */}
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-foreground mb-2">Sign In</h2>
-            <p className="text-muted-foreground">
+            {/*<p className="text-muted-foreground">
               Enter your credentials to access your ACOSA account
-            </p>
+            </p>*/}
           </div>
 
           {/* Form */}
@@ -151,7 +151,7 @@ export default function LoginPage() {
             {/* Student ID Field */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">
-                Student ID
+                Membership ID
               </label>
               <Input
                 type="text"
@@ -161,9 +161,9 @@ export default function LoginPage() {
                 disabled={isLoading}
                 className="w-full"
               />
-              <p className="text-xs text-muted-foreground">
+              {/*<p className="text-xs text-muted-foreground">
                 e.g., ACOSA|2015|0001
-              </p>
+              </p> */} 
             </div>
 
             {/* Password Field */}
@@ -238,12 +238,12 @@ export default function LoginPage() {
                   </Link>
                 </p>
               </div>
-              <div className="text-center text-muted-foreground">
+              {/*<div className="text-center text-muted-foreground">
                 Need help?{' '}
                 <Link href="/" className="text-primary hover:underline font-medium">
                   Contact us
                 </Link>
-              </div>
+              </div>*/}
               <div className="flex gap-4 justify-center text-muted-foreground text-xs">
                 <Link href="/" className="hover:text-foreground">
                   Privacy Policy
@@ -256,7 +256,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Back to Home */}
+          {/* Back to Home *
           <div className="mt-6 text-center">
             <Link
               href="/"
@@ -265,7 +265,7 @@ export default function LoginPage() {
               <ArrowRight className="w-4 h-4 rotate-180" />
               Back to Home
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

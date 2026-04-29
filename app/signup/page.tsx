@@ -8,7 +8,7 @@ import { ArrowRight, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/app/auth-context';
 
-const MEMBERSHIP_FEE = 50; // $50 membership fee
+const MEMBERSHIP_FEE = 30000; // UGX. membership fee
 
 export default function SignupPage() {
   const router = useRouter();
@@ -106,7 +106,7 @@ export default function SignupPage() {
                 </label>
                 <Input
                   type="text"
-                  placeholder="John Doe"
+                  placeholder=" "
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   disabled={isLoading}
@@ -141,7 +141,7 @@ export default function SignupPage() {
                 </label>
                 <Input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder=" "
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
@@ -182,7 +182,7 @@ export default function SignupPage() {
               {/* Membership Fee Info */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <p className="text-sm text-foreground mb-2 font-semibold">Membership Fee</p>
-                <p className="text-2xl font-bold text-primary mb-2">${MEMBERSHIP_FEE}</p>
+                <p className="text-2xl font-bold text-primary mb-2"> {MEMBERSHIP_FEE.toLocaleString()} UGX</p>
                 <p className="text-xs text-muted-foreground">
                   Annual membership fee to join the ACOSA network
                 </p>
@@ -199,7 +199,7 @@ export default function SignupPage() {
                   className="w-4 h-4 rounded border-border mt-1"
                 />
                 <label htmlFor="terms" className="text-sm text-muted-foreground cursor-pointer">
-                  I agree to the ACOSA terms and conditions and understand the ${MEMBERSHIP_FEE} annual membership fee
+                  I agree to the ACOSA terms and conditions and understand the {MEMBERSHIP_FEE.toLocaleString()} Ugx annual membership fee
                 </label>
               </div>
 
@@ -234,13 +234,13 @@ export default function SignupPage() {
                 </p>
               </div>
 
-              <Link
+              {/*<Link
                 href="/login"
                 className="mt-6 flex items-center justify-center gap-2 text-primary hover:text-primary/80 text-sm font-medium"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Sign In
-              </Link>
+              </Link>*/}
             </div>
           </div>
         </div>
