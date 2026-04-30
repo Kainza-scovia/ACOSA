@@ -52,11 +52,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Main Card */}
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          {/* Header - Red (matching dashboard primary color) */}
+          {/* Header - Red gradient (keeping ACOSA brand) */}
           <div className="bg-gradient-to-r from-red-700 to-red-800 p-8 text-center">
             <div className="flex justify-center mb-4">
               <div className="bg-white/20 rounded-full p-4">
@@ -211,7 +211,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="text-center mt-6">
-          <p className="text-gray-500 text-xs">
+          <p className="text-blue-200 text-xs">
             © 2025 ACOSA Alumni Association. All rights reserved.
           </p>
         </div>
