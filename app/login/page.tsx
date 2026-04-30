@@ -32,15 +32,26 @@ export default function LoginPage() {
 
     try {
       const userData = await loginWithStudentId(studentId, password);
+      
       const rememberMe = (document.getElementById('remember') as HTMLInputElement)?.checked;
       
+      // Save user info with name
+      const userToSave = {
+        studentId: studentId,
+        name: userData.name || studentId,
+        year: userData.year || '2024'
+      };
+      
       if (rememberMe) {
-        localStorage.setItem('acosaUser', JSON.stringify(userData));
+        localStorage.setItem('acosaUser', JSON.stringify(userToSave));
       } else {
-        sessionStorage.setItem('acosaUser', JSON.stringify(userData));
+        sessionStorage.setItem('acosaUser', JSON.stringify(userToSave));
       }
       
-      login(studentId, userData.name);
+      // Login user with auth context
+      login(studentId, userToSave.name);
+      
+      // Redirect to home page
       router.push('/');
       
     } catch (error: any) {

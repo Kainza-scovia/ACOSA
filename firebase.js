@@ -37,4 +37,4 @@ export async function loginWithStudentId(studentId, password) {
     console.error('Login error:', error);
     throw new Error('Invalid Student ID or password');
   }
-}
+} 
