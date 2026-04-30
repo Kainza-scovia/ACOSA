@@ -12,12 +12,10 @@ interface SidebarMenuProps {
 export function SidebarMenu({ isOpen, onClose }: SidebarMenuProps) {
   const menuItems = [
     { label: 'About', href: '/about', description: 'History, Mission, Vision & Values' },
-    { label: 'Membership & Registration', href: '/membership', description: 'Join ACOSA today' },
     { label: 'Projects', href: '/projects', description: 'Explore our initiatives' },
     { label: 'Annual Magazines', href: '/magazines', description: 'Read our publications' },
     { label: 'Leadership', href: '/leadership', description: 'Meet our leaders' },
     { label: 'Shop', href: '/shop', description: 'ACOSA merchandise' },
-    { label: 'Dashboard', href: '/dashboard', description: 'Manage your account' },
   ];
 
   return (
@@ -70,8 +68,6 @@ export function SidebarMenu({ isOpen, onClose }: SidebarMenuProps) {
           </button>
         </div>
       </div>
-
-
     </>
   );
 }

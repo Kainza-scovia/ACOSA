@@ -42,7 +42,7 @@ export function Sidebar({ activeTab = 'home', onTabChange }: SidebarProps) {
           })}
         </div>
 
-        {/* Bottom Actions */}
+        {/* Bottom Actions 
         <div className="border-t border-border p-4 space-y-2">
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-secondary transition-all">
             <Settings className="w-5 h-5 flex-shrink-0" />
@@ -52,7 +52,7 @@ export function Sidebar({ activeTab = 'home', onTabChange }: SidebarProps) {
             <LogOut className="w-5 h-5 flex-shrink-0" />
             <span className="text-sm font-medium">Log Out</span>
           </button>
-        </div>
+        </div>*/}
       </aside>
     </>
   );
