@@ -1,18 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ProtectedRoute } from '@/components/protected-route';
 import { Navbar } from '@/components/navbar';
 import { Sidebar } from '@/components/sidebar';
 import { RightSidebar } from '@/components/right-sidebar';
 import { TeamsShowcase } from '@/components/teams-showcase';
 import { MemoryPostCard } from '@/components/memory-post-card';
+import { UserPostCard } from '@/components/user-post-card';
 import { TestimonyCard } from '@/components/testimony-card';
 import { JobCard } from '@/components/job-card';
 import { EventCard } from '@/components/event-card';
+import { db } from '@/firebase';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
 function HomeContent() {
   const [activeTab, setActiveTab] = useState('home');
+  const [userPosts, setUserPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Subscribe to user posts collection
+    const postsQuery = query(
+      collection(db, 'userPosts'),
+      orderBy('createdAt', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(postsQuery, (snapshot) => {
+      const posts = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUserPosts(posts);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const memoryPosts = [
     {
@@ -349,6 +371,30 @@ function HomeContent() {
                   <p className="text-muted-foreground">Relive the incredible moments from our historic sports tournament</p>
                 </div>
               </div>
+
+              {/* User Posts Feed */}
+              {userPosts.length > 0 && (
+                <div className="px-4 md:px-6 lg:px-8 py-6">
+                  <h2 className="text-lg font-bold text-foreground mb-4">Member Experiences</h2>
+                  <div className="space-y-4">
+                    {userPosts.map((post) => (
+                      <UserPostCard
+                        key={post.id}
+                        id={post.id}
+                        userId={post.userId}
+                        userName={post.userName}
+                        caption={post.caption}
+                        images={post.images}
+                        likes={post.likes}
+                        createdAt={post.createdAt}
+                        onPostDeleted={() => {
+                          setUserPosts((prev) => prev.filter((p) => p.id !== post.id));
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
               
               <div className="px-4 md:px-6 lg:px-8 space-y-6">
                 {memoryPosts.map((post) => (

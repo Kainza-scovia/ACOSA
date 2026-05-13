@@ -1,10 +1,11 @@
 'use client';
 
-import { Home, Users, Briefcase, Calendar, Megaphone, Menu, LogOut, User, Key } from 'lucide-react';
+import { Home, Users, Briefcase, Calendar, Megaphone, Menu, LogOut, User, Key, Edit3 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SidebarMenu } from '@/components/sidebar-menu';
+import { CreatePostModal } from '@/components/create-post-modal';
 import { useAuth } from '@/app/auth-context';
 
 interface NavbarProps {
@@ -17,6 +18,7 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   const lastScrollY = useRef(0);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -93,14 +95,23 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
           {/* Right Actions */}
           <div className="flex items-center gap-3 relative">
             {isHydrated && isLoggedIn && (
-              <div className="relative">
+              <>
                 <button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm hover:opacity-80 transition-opacity"
-                  title="User Menu"
+                  onClick={() => setIsCreatePostOpen(true)}
+                  className="p-2 hover:bg-secondary rounded-lg transition-colors text-foreground hidden sm:flex items-center gap-2"
+                  title="Create Post"
                 >
-                  👤
+                  <Edit3 className="w-5 h-5" />
+                  <span className="text-sm font-medium hidden md:inline">Post</span>
                 </button>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm hover:opacity-80 transition-opacity"
+                    title="User Menu"
+                  >
+                    👤
+                  </button>
 
                 {/* User Menu Dropdown */}
                 {showUserMenu && (
@@ -142,7 +153,8 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
                     </button>
                   </div>
                 )}
-              </div>
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -150,6 +162,16 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
         {/* Sidebar Menu */}
         <SidebarMenu isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       </nav>
+
+      {/* Create Post Modal */}
+      <CreatePostModal
+        isOpen={isCreatePostOpen}
+        onClose={() => setIsCreatePostOpen(false)}
+        onPostCreated={() => {
+          // Trigger a refresh of posts
+          window.location.reload();
+        }}
+      />
 
       {/* Mobile Navigation Bar - Fixed at Bottom */}
       <div className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-border px-2 py-1 flex gap-1 bg-card transition-transform duration-300 ease-in-out ${
