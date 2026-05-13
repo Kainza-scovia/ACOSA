@@ -338,7 +338,7 @@ function HomeContent() {
       <div className="flex w-full">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <main className="flex-1 w-full lg:max-w-2xl px-0 py-0 md:px-0 lg:px-0 mx-auto lg:mx-0">
+        <main className="flex-1 w-full lg:max-w-2xl px-0 py-0 md:px-0 lg:px-0 mx-auto lg:mx-0 pb-24 lg:pb-0">
           {activeTab === 'home' && (
             <div className="space-y-0">
               <TeamsShowcase />
