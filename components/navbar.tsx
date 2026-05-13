@@ -98,11 +98,11 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
               <>
                 <button
                   onClick={() => setIsCreatePostOpen(true)}
-                  className="p-2 hover:bg-secondary rounded-lg transition-colors text-foreground hidden sm:flex items-center gap-2"
+                  className="p-2 hover:bg-secondary rounded-lg transition-colors text-foreground flex items-center gap-2"
                   title="Create Post"
                 >
                   <Edit3 className="w-5 h-5" />
-                  <span className="text-sm font-medium hidden md:inline">Post</span>
+                  <span className="text-sm font-medium hidden sm:inline">Post</span>
                 </button>
                 <div className="relative">
                   <button
