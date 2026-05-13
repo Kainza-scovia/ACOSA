@@ -1,7 +1,7 @@
 'use client';
 
 import { Home, Users, Briefcase, Calendar, Megaphone, Menu, LogOut, User, Key } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SidebarMenu } from '@/components/sidebar-menu';
@@ -16,6 +16,9 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
   const { isLoggedIn, logout, isHydrated } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const menuItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -28,6 +31,38 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
   const handleTabChange = (tab: string) => {
     onTabChange?.(tab);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show nav if scrolling up or at the top
+      if (currentScrollY < lastScrollY.current || currentScrollY < 50) {
+        setIsBottomNavVisible(true);
+      } else if (currentScrollY > lastScrollY.current + 10) {
+        // Hide nav if scrolling down significantly
+        setIsBottomNavVisible(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
+
+      // Auto-show nav after scrolling stops
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      scrollTimeout.current = setTimeout(() => {
+        setIsBottomNavVisible(true);
+      }, 2000);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -117,7 +152,9 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
       </nav>
 
       {/* Mobile Navigation Bar - Fixed at Bottom */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-border px-2 py-1 flex gap-1 bg-card">
+      <div className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-border px-2 py-1 flex gap-1 bg-card transition-transform duration-300 ease-in-out ${
+        isBottomNavVisible ? 'translate-y-0' : 'translate-y-full'
+      }`}>
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
