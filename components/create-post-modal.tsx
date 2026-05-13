@@ -89,8 +89,8 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
     try {
       await addDoc(collection(db, 'userPosts'), {
         userId: user.id,
-        userName: user.name,
-        userEmail: user.email,
+        userName: user.userEmail: user.email,name,
+        
         caption: caption.trim(),
         images: selectedImages,
         likes: 0,
@@ -123,7 +123,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* User Info */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-gray-500 text-white flex items-center justify-center font-bold text-sm">
               👤
             </div>
             <div>
@@ -132,12 +132,12 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
             </div>
           </div>
 
-          {/* Caption Input */}
+          {/* Caption Input - changed focus ring to gray */}
           <textarea
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             placeholder="Share your experience and memories..."
-            className="w-full bg-secondary border border-border rounded-lg p-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-primary transition-all resize-none"
+            className="w-full bg-secondary border border-border rounded-lg p-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-gray-400 transition-all resize-none"
             rows={4}
           />
 
@@ -178,7 +178,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-primary"
+              className="p-2 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-gray-600"
               title="Add photos"
             >
               <ImageIcon className="w-5 h-5" />
@@ -197,7 +197,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
               <Button
                 type="submit"
                 disabled={isSubmitting || (!caption.trim() && selectedImages.length === 0)}
-                className="bg-primary hover:bg-primary/90 flex items-center gap-2"
+                className="bg-gray-600 hover:bg-gray-700 flex items-center gap-2 text-white"
               >
                 <Send className="w-4 h-4" />
                 {isSubmitting ? 'Posting...' : 'Post'}
