@@ -98,7 +98,7 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
               <>
                 <button
                   onClick={() => setIsCreatePostOpen(true)}
-                  className="p-2 hover:bg-secondary rounded-lg transition-colors text-foreground flex items-center gap-2"
+                  className="p-2 bg-secondary hover:bg-secondary/80 rounded-lg transition-colors text-foreground flex items-center gap-2"
                   title="Create Post"
                 >
                   <Edit3 className="w-5 h-5" />
