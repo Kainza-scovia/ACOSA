@@ -89,7 +89,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
     try {
       await addDoc(collection(db, 'userPosts'), {
         userId: user.id,
-        userName: user.userEmail: user.email,name,
+        userName: user.email,
         
         caption: caption.trim(),
         images: selectedImages,
