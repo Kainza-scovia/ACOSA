@@ -87,10 +87,10 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, 'userPosts'), {
+      console.log('[v0] Creating post with user:', user?.email);
+      const postRef = await addDoc(collection(db, 'userPosts'), {
         userId: user.id,
         userName: user.email,
-        
         caption: caption.trim(),
         images: selectedImages,
         likes: 0,
@@ -99,6 +99,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
+      console.log('[v0] Post created successfully with ID:', postRef.id);
 
       // Reset form
       setCaption('');
@@ -106,7 +107,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
       onPostCreated();
       onClose();
     } catch (error) {
-      console.error('Error creating post:', error);
+      console.error('[v0] Error creating post:', error);
       alert('Failed to create post. Please try again.');
     } finally {
       setIsSubmitting(false);

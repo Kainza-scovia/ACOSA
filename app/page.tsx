@@ -30,6 +30,7 @@ function HomeContent() {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log('[v0] User posts updated:', posts.length, 'posts');
       setUserPosts(posts);
     });
 

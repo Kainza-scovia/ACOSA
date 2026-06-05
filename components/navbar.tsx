@@ -168,8 +168,8 @@ export function Navbar({ activeTab = 'home', onTabChange }: NavbarProps) {
         isOpen={isCreatePostOpen}
         onClose={() => setIsCreatePostOpen(false)}
         onPostCreated={() => {
-          // Trigger a refresh of posts
-          window.location.reload();
+          // Posts will automatically appear via Firestore listener
+          setIsCreatePostOpen(false);
         }}
       />
 
