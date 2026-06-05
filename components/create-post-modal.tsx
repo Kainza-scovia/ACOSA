@@ -132,12 +132,12 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
             </div>
           </div>
 
-          {/* Caption Input - changed focus ring to gray */}
+          {/* Caption Input */}
           <textarea
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             placeholder="Share your experience and memories..."
-            className="w-full bg-secondary border border-border rounded-lg p-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-gray-400 transition-all resize-none"
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm text-foreground placeholder-muted-foreground outline-none focus:ring-2 focus:ring-slate-300 transition-all resize-none"
             rows={4}
           />
 
