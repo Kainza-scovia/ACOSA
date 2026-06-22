@@ -430,46 +430,50 @@ export function UserPostCard({ id, userId, userName, caption, images, likes: ini
                 className="flex-1 h-96 object-cover cursor-pointer hover:opacity-90 transition-opacity"
               />
               <div className="flex flex-col gap-1 flex-1">
-                <div className="flex gap-1 flex-1">
-                  {images.slice(1, 3).map((image, index) => (
-                    <img
-                      key={index + 1}
-                      src={image}
-                      alt={`Post image ${index + 2}`}
-                      onClick={() => {
-                        setLightboxIndex(index + 1);
-                        setLightboxOpen(true);
-                      }}
-                      className="flex-1 object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                    />
-                  ))}
-                </div>
-                <div className="flex gap-1 flex-1">
-                  {images.slice(3, 4).map((image, index) => (
-                    <div key={index + 3} className="relative flex-1">
+                {images.length >= 3 && (
+                  <div className="flex gap-1 flex-1">
+                    {images.slice(1, 3).map((image, index) => (
                       <img
+                        key={index + 1}
                         src={image}
-                        alt={`Post image ${index + 4}`}
+                        alt={`Post image ${index + 2}`}
                         onClick={() => {
-                          setLightboxIndex(index + 3);
+                          setLightboxIndex(index + 1);
                           setLightboxOpen(true);
                         }}
-                        className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                        className="flex-1 object-cover cursor-pointer hover:opacity-90 transition-opacity"
                       />
-                    </div>
-                  ))}
-                  {images.length > 4 && (
-                    <div
-                      onClick={() => {
-                        setLightboxIndex(4);
-                        setLightboxOpen(true);
-                      }}
-                      className="flex-1 bg-black/60 flex items-center justify-center cursor-pointer hover:bg-black/70 transition-colors relative"
-                    >
-                      <span className="text-white text-2xl font-bold">+{images.length - 4}</span>
-                    </div>
-                  )}
-                </div>
+                    ))}
+                  </div>
+                )}
+                {images.length >= 4 && (
+                  <div className="flex gap-1 flex-1">
+                    {images.slice(3, 4).map((image, index) => (
+                      <div key={index + 3} className="relative flex-1">
+                        <img
+                          src={image}
+                          alt={`Post image ${index + 4}`}
+                          onClick={() => {
+                            setLightboxIndex(index + 3);
+                            setLightboxOpen(true);
+                          }}
+                          className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                        />
+                      </div>
+                    ))}
+                    {images.length > 4 && (
+                      <div
+                        onClick={() => {
+                          setLightboxIndex(4);
+                          setLightboxOpen(true);
+                        }}
+                        className="flex-1 bg-black/60 flex items-center justify-center cursor-pointer hover:bg-black/70 transition-colors relative"
+                      >
+                        <span className="text-white text-2xl font-bold">+{images.length - 4}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}

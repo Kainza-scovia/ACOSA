@@ -460,23 +460,27 @@ export function MemoryPostCard(post: MemoryPostCardProps) {
                 <img src={post.images[0]} alt="Memory 1" className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" />
               </div>
               <div className="flex flex-col gap-1 flex-1">
-                <div className="flex gap-1 flex-1">
-                  {post.images.slice(1, 3).map((image, index) => (
-                    <div key={index + 1} className="flex-1 bg-gray-200 cursor-pointer group" onClick={() => { setLightboxIndex(index + 1); setLightboxOpen(true); }}>
-                      <img src={image} alt={`Memory ${index + 2}`} className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-1 flex-1">
-                  <div className="flex-1 bg-gray-200 cursor-pointer group" onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}>
-                    <img src={post.images[3]} alt="Memory 4" className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" />
+                {post.images.length >= 3 && (
+                  <div className="flex gap-1 flex-1">
+                    {post.images.slice(1, 3).map((image, index) => (
+                      <div key={index + 1} className="flex-1 bg-gray-200 cursor-pointer group" onClick={() => { setLightboxIndex(index + 1); setLightboxOpen(true); }}>
+                        <img src={image} alt={`Memory ${index + 2}`} className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" />
+                      </div>
+                    ))}
                   </div>
-                  {post.images.length > 4 && (
-                    <div className="flex-1 bg-black/60 flex items-center justify-center cursor-pointer hover:bg-black/70 transition-colors" onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}>
-                      <span className="text-white text-2xl font-bold">+{post.images.length - 4}</span>
+                )}
+                {post.images.length >= 4 && (
+                  <div className="flex gap-1 flex-1">
+                    <div className="flex-1 bg-gray-200 cursor-pointer group" onClick={() => { setLightboxIndex(3); setLightboxOpen(true); }}>
+                      <img src={post.images[3]} alt="Memory 4" className="w-full h-full object-cover group-hover:opacity-90 transition-opacity" />
                     </div>
-                  )}
-                </div>
+                    {post.images.length > 4 && (
+                      <div className="flex-1 bg-black/60 flex items-center justify-center cursor-pointer hover:bg-black/70 transition-colors" onClick={() => { setLightboxIndex(4); setLightboxOpen(true); }}>
+                        <span className="text-white text-2xl font-bold">+{post.images.length - 4}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}
