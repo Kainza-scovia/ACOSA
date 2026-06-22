@@ -344,9 +344,9 @@ export function UserPostCard({ id, userId, userName, caption, images, likes: ini
                 setLightboxIndex(0);
                 setLightboxOpen(true);
               }}
-              className="w-full cursor-pointer hover:opacity-90 transition-opacity"
+              className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity object-cover"
             />
-          ) : (
+          ) : images.length === 2 ? (
             <div className="grid grid-cols-2 gap-1">
               {images.map((image, index) => (
                 <img
@@ -359,6 +359,58 @@ export function UserPostCard({ id, userId, userName, caption, images, likes: ini
                   }}
                   className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity"
                 />
+              ))}
+            </div>
+          ) : images.length === 3 ? (
+            <div className="grid grid-cols-2 gap-1">
+              <img
+                src={images[0]}
+                alt="Post image 1"
+                onClick={() => {
+                  setLightboxIndex(0);
+                  setLightboxOpen(true);
+                }}
+                className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity row-span-2"
+              />
+              <div className="flex flex-col gap-1">
+                {images.slice(1, 3).map((image, index) => (
+                  <img
+                    key={index + 1}
+                    src={image}
+                    alt={`Post image ${index + 2}`}
+                    onClick={() => {
+                      setLightboxIndex(index + 1);
+                      setLightboxOpen(true);
+                    }}
+                    className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-1">
+              {images.slice(0, 4).map((image, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={image}
+                    alt={`Post image ${index + 1}`}
+                    onClick={() => {
+                      setLightboxIndex(index);
+                      setLightboxOpen(true);
+                    }}
+                    className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                  />
+                  {index === 3 && images.length > 4 && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center cursor-pointer hover:bg-black/60 transition-colors"
+                      onClick={() => {
+                        setLightboxIndex(3);
+                        setLightboxOpen(true);
+                      }}
+                    >
+                      <span className="text-white text-2xl font-bold">+{images.length - 4}</span>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           )}
