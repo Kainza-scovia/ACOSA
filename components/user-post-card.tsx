@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Share2, ChevronDown, ChevronUp, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Heart, MessageCircle, Share2, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, MoreHorizontal, Trash2 } from 'lucide-react';
 import { useAuth } from '@/app/auth-context';
 import { db } from '@/firebase';
 import { doc, setDoc, deleteDoc, getDoc, getDocs, collection, addDoc, query, orderBy, onSnapshot, updateDoc, increment, arrayUnion, arrayRemove } from 'firebase/firestore';
@@ -48,6 +48,7 @@ export function UserPostCard({ id, userId, userName, caption, images, likes: ini
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [replyText, setReplyText] = useState('');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -333,86 +334,60 @@ export function UserPostCard({ id, userId, userName, caption, images, likes: ini
         )}
       </div>
 
-      {/* Images */}
+      {/* Images Carousel */}
       {images.length > 0 && (
-        <div className="border-b border-border">
-          {images.length === 1 ? (
+        <div className="border-b border-border relative bg-black">
+          <div className="relative overflow-hidden">
             <img
-              src={images[0]}
-              alt="Post image"
+              src={images[currentImageIndex]}
+              alt={`Post image ${currentImageIndex + 1}`}
               onClick={() => {
-                setLightboxIndex(0);
+                setLightboxIndex(currentImageIndex);
                 setLightboxOpen(true);
               }}
               className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity object-cover"
             />
-          ) : images.length === 2 ? (
-            <div className="grid grid-cols-2 gap-1">
-              {images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Post image ${index + 1}`}
-                  onClick={() => {
-                    setLightboxIndex(index);
-                    setLightboxOpen(true);
-                  }}
-                  className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                />
-              ))}
-            </div>
-          ) : images.length === 3 ? (
-            <div className="grid grid-cols-2 gap-1">
-              <img
-                src={images[0]}
-                alt="Post image 1"
-                onClick={() => {
-                  setLightboxIndex(0);
-                  setLightboxOpen(true);
-                }}
-                className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity row-span-2"
-              />
-              <div className="flex flex-col gap-1">
-                {images.slice(1, 3).map((image, index) => (
-                  <img
-                    key={index + 1}
-                    src={image}
-                    alt={`Post image ${index + 2}`}
-                    onClick={() => {
-                      setLightboxIndex(index + 1);
-                      setLightboxOpen(true);
-                    }}
-                    className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity"
+          </div>
+
+          {/* Navigation Arrows - Only show if multiple images */}
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
+                className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
+                className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+                aria-label="Next image"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              {/* Image Counter */}
+              <div className="absolute top-3 right-3 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-medium">
+                {currentImageIndex + 1} / {images.length}
+              </div>
+
+              {/* Indicator Dots */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentImageIndex
+                        ? 'bg-white w-6'
+                        : 'bg-white/50 hover:bg-white/70'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
                   />
                 ))}
               </div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-1">
-              {images.slice(0, 4).map((image, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={image}
-                    alt={`Post image ${index + 1}`}
-                    onClick={() => {
-                      setLightboxIndex(index);
-                      setLightboxOpen(true);
-                    }}
-                    className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                  />
-                  {index === 3 && images.length > 4 && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center cursor-pointer hover:bg-black/60 transition-colors"
-                      onClick={() => {
-                        setLightboxIndex(3);
-                        setLightboxOpen(true);
-                      }}
-                    >
-                      <span className="text-white text-2xl font-bold">+{images.length - 4}</span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+            </>
           )}
         </div>
       )}
