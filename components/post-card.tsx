@@ -64,9 +64,8 @@ export function PostCard({
           className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
         >
           <Heart
-            className={`w-4 h-4 transition-all ${
-              isLiked ? 'fill-primary text-primary' : ''
-            }`}
+            className={`w-4 h-4 transition-all ${isLiked ? 'fill-primary text-primary' : ''
+              }`}
           />
           <span className="text-xs group-hover:text-primary">{likes}</span>
         </button>
